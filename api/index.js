@@ -21,9 +21,11 @@ function generateTableHead(table, data) // Generates the headlines for the thing
         let th = document.createElement("th"); // Create the head
         let text = document.createTextNode(key); // Get the text
         console.log(text.nodeValue);
-        th.appendChild(text);                   // Append the text to th
-        row.appendChild(th);                    // add to table row
-        
+        if(text.nodeValue != "id" || text.nodeValue != "maphash")
+        {
+            th.appendChild(text);                   // Append the text to th
+            row.appendChild(th);                    // add to table row    
+        }
     }
 }
 
@@ -37,8 +39,10 @@ function generateTable(table, data)
            
             let cell = row.insertCell(); // Insert the cell to row
             let text = document.createTextNode(element[key]); // Get the value of an element using key
-            cell.appendChild(text);       // Append the text to the cell
-            
+            if(text.nodeValue != "id" || text.nodeValue != "maphash")
+            {
+                cell.appendChild(text);       // Append the text to the cell
+            }
         }
     }
 }
