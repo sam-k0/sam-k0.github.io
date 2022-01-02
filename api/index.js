@@ -58,13 +58,12 @@ fetch('https://sam-k0.github.io/api/data.json')
 
         for(var i in myJson)
         {
-            delete i['id'];
-            delete i['maphash'];
-            result.push(i);
+            delete myJson[i]['id'];
+            delete myJson[i]['maphash'];
+            result.push(myJson[i]);
         }
         
         console.log(result);
-
         doTable(result);
 
     })
