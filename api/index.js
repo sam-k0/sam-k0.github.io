@@ -1,11 +1,3 @@
-let mountains = [
-    { name: "Monte Falco", height: 1658, place: "Parco Foreste Casentinesi" },
-    { name: "Monte Falterona", height: 1654, place: "Parco Foreste Casentinesi" },
-    { name: "Poggio Scali", height: 1520, place: "Parco Foreste Casentinesi" },
-    { name: "Pratomagno", height: 1592, place: "Parco Foreste Casentinesi" },
-    { name: "Monte Amiata", height: 1738, place: "Siena" }
-];
-
 
 
 function generateTableHead(table, data) // Generates the headlines for the things
@@ -16,16 +8,11 @@ function generateTableHead(table, data) // Generates the headlines for the thing
     // Iterate over things
     for(let key of data)// Data is a tuple of keys of the json
     {
-        
-        
         let th = document.createElement("th"); // Create the head
         let text = document.createTextNode(key); // Get the text
         console.log(text.nodeValue);
-        if(text.nodeValue != "id" || text.nodeValue != "maphash")
-        {
-            th.appendChild(text);                   // Append the text to th
-            row.appendChild(th);                    // add to table row    
-        }
+        th.appendChild(text);                   // Append the text to th
+        row.appendChild(th);                    // add to table row    
     }
 }
 
@@ -39,10 +26,9 @@ function generateTable(table, data)
            
             let cell = row.insertCell(); // Insert the cell to row
             let text = document.createTextNode(element[key]); // Get the value of an element using key
-            if(text.nodeValue != "id" || text.nodeValue != "maphash")
-            {
-                cell.appendChild(text);       // Append the text to the cell
-            }
+            
+            cell.appendChild(text);       // Append the text to the cell
+            
         }
     }
 }
@@ -58,21 +44,6 @@ function doTable(resp)
 
 
 
-
-//const http = new XMLHttpRequest()
-//http.open("GET", "https://reflectionlink.herokuapp.com/user/0");
-//http.send();
-//http.onload = () => doTable(mountains);
-
-
-//doTable(mountains)
-/*
-fetch('https://sam-k0.github.io/api/data.json')
-    .then(res => res.json())
-    //.then(data => console.log(data.data))
-    .then(data => console.log(data))
-*/
-
 fetch('https://sam-k0.github.io/api/data.json')
     .then(function(response)
     {
@@ -82,7 +53,20 @@ fetch('https://sam-k0.github.io/api/data.json')
     {
         console.log(myJson.username);
         // Try to do the thing
-        doTable(myJson);
+
+        var result = [];
+
+        for(var i in myJson)
+        {
+            delete i['id'];
+            delete i['maphash'];
+            result.push(i);
+        }
+        
+        console.log(result);
+
+        doTable(result);
+
     })
     .catch(function(err)
     {
