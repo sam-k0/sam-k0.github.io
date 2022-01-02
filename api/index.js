@@ -71,6 +71,8 @@ fetch('https://sam-k0.github.io/api/data.json')
     .then(function(myJson)
     {
         console.log(myJson.username);
+        // Try to do the thing
+        doTable(myJson);
     })
     .catch(function(err)
     {
