@@ -56,9 +56,23 @@ function doTable(resp)
 
 
 //doTable(mountains)
-
+/*
 fetch('https://sam-k0.github.io/api/data.json')
     .then(res => res.json())
     //.then(data => console.log(data.data))
     .then(data => console.log(data))
+*/
 
+fetch('https://sam-k0.github.io/api/data.json')
+    .then(function(response)
+    {
+        return response.json();
+    })
+    .then(function(myJson)
+    {
+        console.log(myJson.username);
+    })
+    .catch(function(err)
+    {
+        console.log("Error: " + err);
+    })
