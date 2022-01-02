@@ -42,9 +42,9 @@ function doTable(resp)
     console.log(resp);
 }
 
+//https://sam-k0.github.io/api/data.json
 
-
-fetch('https://sam-k0.github.io/api/data.json')
+fetch('https://reflectionlink.herokuapp.com/score/hash/sigma')
     .then(function(response)
     {
         return response.json();
