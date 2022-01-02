@@ -20,7 +20,7 @@ function generateTableHead(table, data) // Generates the headlines for the thing
         
         let th = document.createElement("th"); // Create the head
         let text = document.createTextNode(key); // Get the text
-        console.log(text);
+        console.log(text.nodeValue);
         th.appendChild(text);                   // Append the text to th
         row.appendChild(th);                    // add to table row
         
