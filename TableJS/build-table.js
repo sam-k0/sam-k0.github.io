@@ -57,7 +57,7 @@ function doTable(resp)
 
 //doTable(mountains)
 
-fetch('https://reqres.in/api/users')
+fetch('https://sam-k0.github.io/api/data.json')
     .then(res => res.json())
     //.then(data => console.log(data.data))
     .then(data => doTable(data.data))
