@@ -1,60 +1,84 @@
 <!DOCTYPE html>
-<html>
-
+<html lang="en">
 <head>
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, shrink-to-fit=no">
-    <title>Home - sam-k0</title>
-    <meta name="description" content="My GitHub Repos!">
-    <link rel="stylesheet" href="assets/bootstrap/css/bootstrap.min.css">
-    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Lato:300,400,700&amp;display=swap">
-    <link rel="stylesheet" href="assets/fonts/ionicons.min.css">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/pikaday/1.6.1/css/pikaday.min.css">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>sam-ko.eu</title>
+    <link rel="stylesheet" href="styles/main.css">
+    <link rel="icon" href="favicon.ico" type="image/x-icon">
 </head>
-
 <body>
-    <nav class="navbar navbar-dark navbar-expand-lg fixed-top bg-white portfolio-navbar gradient">
-        <div class="container"><a class="navbar-brand logo" href="#">sam-k0</a><button data-bs-toggle="collapse" class="navbar-toggler" data-bs-target="#navbarNav"><span class="visually-hidden">Toggle navigation</span><span class="navbar-toggler-icon"></span></button>
-            <div class="collapse navbar-collapse" id="navbarNav">
-                <ul class="navbar-nav ms-auto">
-                    <li class="nav-item"><a class="nav-link active" href="index.html">Home</a></li>
-                    <li class="nav-item"><a class="nav-link" href="projects-grid-cards.html">Projects</a></li>
-                    <li class="nav-item"><a class="nav-link" href="https://sam-k0.github.io/index_old.html">Old page</a></li>
-                </ul>
-            </div>
-        </div>
-    </nav>
-    <main class="page lanidng-page">
-        <section class="portfolio-block block-intro">
-            <div class="container">
-                <div class="avatar" style="background: url(&quot;assets/img/avatars/Sa_ko_wave.png&quot;) center / cover;"></div>
-                <div class="about-me">
-                    <p>Welcome to my GitHub-page!</p>
-                </div>
-            </div>
-            <div class="d-flex justify-content-center align-items-center content">
-                <h3>Some of my projects</h3>
-            </div>
+    <div class="container">
+        <header>
+            <h1 id="top">Welcome!</h1>
+            <p>Please see the different sections below for more convenient navigation.</p>
+        </header>
+        <nav>
+            <ul>
+                <li><a href="#about">About</a></li>
+                <li><a href="#gallery">Gallery</a></li>
+                <li><a href="#contact">Contact</a></li>
+            </ul>
+        </nav>
+        <section id="about">
+            <h2>About This Site</h2>
+            <p>This is my landing page.</p>
         </section>
-        <section class="portfolio-block photography">
-            <div class="container">
-                <div class="row g-0">
-                    <div class="col-md-6 col-lg-4 item zoom-on-hover"><a href="https://github.com/sam-k0/Launcher"><img class="img-fluid image" src="assets/img/gamemakerlauncher.png" width="1080" height="1080"></a></div>
-                    <div class="col-md-6 col-lg-4 item zoom-on-hover"><a href="https://github.com/sam-k0/Testing"><img class="img-fluid image" src="assets/img/dlltesting.png"></a></div>
-                    <div class="col-md-6 col-lg-4 item zoom-on-hover"><a href="https://github.com/sam-k0/GML-Modding-SDK"><img class="img-fluid image" src="assets/img/gmlmoddingsdk.png"></a></div>
-                </div>
-            </div>
+        <section id="gallery">
+            <h2>Gallery</h2>
+            <img src="img/gallery/duck.png" alt="Gallery Image">
+            <img src="img/gallery/gallery.png" alt="Gallery Image">
+            <img src="img/gallery/sprout.png" alt="Gallery Image">
+            <img src="img/gallery/stair.png" alt="Gallery Image">
+            <img src="img/gallery/tree.png" alt="Gallery Image">
+            <img src="img/gallery/pool.png" alt="Gallery Image">
+            <a href="#top">
+                <img src="img/ui/top.png" alt="To top">
+            </a>
         </section>
-        <section class="portfolio-block call-to-action border-bottom"></section>
-    </main>
-    <footer class="page-footer">
-        <div class="container">
-            <div class="links"><a href="#">Scroll to top</a><a href="https://github.com/sam-k0?tab=repositories">All projects</a></div>
-        </div>
-    </footer>
-    <script src="assets/bootstrap/js/bootstrap.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/pikaday/1.6.1/pikaday.min.js"></script>
-    <script src="assets/js/theme.js"></script>
-</body>
 
+        <section id="contact">
+            <h2>Contact Me</h2>
+            <form>
+                <label for="name">Name:</label>
+                <input type="text" id="name" name="name" required>
+                <label for="email">Email:</label>
+                <input type="email" id="email" name="email" required>
+                <input type="submit" value="Send" onclick="sendMail(event)">
+            </form>
+            <a href="#top">
+                <img src="img/ui/top.png" alt="To top">
+            </a>
+        </section>
+        <h2></h2>
+        <footer>
+            <div class="footer-images">
+                <a href="http://www.librewolf.net">
+                    <img src="img/banners/fuckchrome.png" alt="Switch to librewolf">
+                </a>
+
+                <a href="https://fedoraproject.org//">
+                    <img src="img/banners/fuckwindows.png" alt="Switch to Fedora">
+                </a>
+
+           
+                <img src="img/banners/nopicture.gif" alt="nrel">
+
+
+                <img src="img/banners/balls-baldi.gif" alt="Balls Baldi" style="width: 15%; height: 15%;">
+
+                <a href="https://www.librewolf.net">
+                    <img src="img/banners/librewolf.png" alt="Switch to LibreWolf">
+                </a>
+            </div>
+        <p>&copy;2025 sam-ko.eu, this website does not track or save any user data or personal information.</p>
+        </footer>
+
+
+        <a href="#top">
+            <img src="img/ui/top.png" alt="To top">
+        </a>
+    </div>
+    <script src="scripts/main.js"></script>
+</body>
 </html>
