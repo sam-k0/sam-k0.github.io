@@ -2,45 +2,13 @@
 let step = 0;
 let score = 0;
 
-
-// if no permission, keep requesting it every 2 seconds
-function requestNotificationPerms(){
-    console.log("Requesting notification permission...");
-    if (Notification.permission !== "granted") {
-        Notification.requestPermission().then(permission => {
-            if (permission === "granted") {
-                console.log("Notification permission granted.");
-
-                setInterval(() => {
-                    if (Notification.permission === "granted") {
-                        console.log("Showing notification...");
-                        showNotification();
-                    }
-                }, 2000);
-            }
-        });
-    }
-    else {
-        console.log("Notification permission already granted.");
-        showNotification();
-    }
-}
-
-function showNotification() {
-    const notification = new Notification("Duck", {
-        body: "Duck (28) wants to talk to you.",
-        icon: "img/gallery/duck.png"
-    });
-
-    notification.onclick = () => {
-        window.focus();
-        alert("Calling Duck (28)");
-    };
-}
-
+document.addEventListener("DOMContentLoaded", function() {
+    let content = randomContent();
+    document.getElementById("captcha-image").src = content.image;
+    document.getElementById("captcha-description").innerText = content.description;
+});
 
 function yes() {
-    requestNotificationPerms();
     document.getElementById("captcha-message").innerText = "Thank you for your response.";
     step ++;
     score += step;
@@ -48,7 +16,6 @@ function yes() {
 }
     
 function no() {
-    requestNotificationPerms();
     document.getElementById("captcha-message").innerText = "Please try again.";
     step++;
     score -= step;
@@ -73,21 +40,39 @@ function evaluate()
     else
     {
         document.getElementById("captcha-message").innerText = "Please try again.";
-        document.getElementById("captcha-image").src = randomImage();
+
+        let content = randomContent();
+
+        document.getElementById("captcha-image").src = content.image;
+        document.getElementById("captcha-description").innerText = content.description;
     }
 }
 
-function randomImage() {
+function randomContent() {
     const images = [
-        "box.png",
-        "corridor.png",
-        "duck.png",
-        "gallery.png",
-        "office.png",
         "pool.png",
         "sprout.png",
         "stair.png",
-        "tree.png"
+        "tree.png",
+        "office.png",
+        "gallery.png",
+        "duck.png",
+        "corridor.png",
+        "box.png"
     ];
-    return "img/gallery/"+images[Math.floor(Math.random() * images.length)];
+
+    const descriptions = [
+        "An indoor swimming pool with bright blue water, surrounded by sleek white walls and ceiling. The lighting is soft, giving a modern and minimalistic look.",
+        "A small green plant sprouting from brown soil, bathed in natural light. It gives a sense of growth and freshness.",
+        "A dimly lit, old hallway with wooden stairs on the left and a dark open doorway ahead. The atmosphere is eerie and slightly unsettling.",
+        "A large tree with a thick trunk and widespread branches covered in green leaves, viewed from below with a bright background. It feels peaceful and natural.",
+        "A sprawling, open-plan office with rows of cubicles. The orange dividers give a hint of vibrancy, but the overall space feels sterile and somewhat impersonal.",
+        "A dimly lit art gallery stretches into the darkness, filled with mysterious paintings. The warm tones of the artwork create an intimate, yet slightly somber atmosphere.",
+        "A cheerful yellow rubber duck, crowned with fluffy white foam, beams out at the viewer. It's playfully charming, evoking bath time memories and simple joy.",
+        "An indoor swimming pool with bright blue water, surrounded by sleek white walls and ceiling. The lighting is soft, giving a modern and minimalistic look.",
+        "A lonely black trash can sits stoically in a vast, rolling green field under a wide-open blue sky."
+    ]
+
+    let c = Math.floor(Math.random() * images.length);
+    return {"image": "img/gallery/"+images[c], "description": descriptions[c]};
 }
