@@ -24,7 +24,7 @@ function evaluate()
         document.getElementById("captcha-message").innerText = "Captcha completed successfully. Redirecting...";
         // redirect after 4 seconds
         setTimeout(function() {
-            window.location.href = "index.html";
+            window.location.href = "real_index.html";
         }, 3000);
     }
     else if (step > 2)
