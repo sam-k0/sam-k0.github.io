@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>sam-ko.eu</title>
+    <link rel="stylesheet" href="styles/main.css">
+    <link rel="icon" href="favicon.ico" type="image/x-icon">
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1 id="top">Welcome!</h1>
+            <p>Please see the different sections below for more convenient navigation.</p>
+        </header>
+        <nav>
+            <ul>
+                <li><a href="#about">About</a></li>
+                <li><a href="#gallery">Gallery</a></li>
+                <li><a href="#contact">Contact</a></li>
+            </ul>
+        </nav>
+        <section id="about">
+            <h2>About This Site</h2>
+            <p>This is my personal website.</p>
+        </section>
+        <section id="gallery">
+            <h2>Gallery</h2>
+            <img src="img/gallery/duck.png" alt="Gallery Image">
+            <img src="img/gallery/gallery.png" alt="Gallery Image">
+            <img src="img/gallery/sprout.png" alt="Gallery Image">
+            <img src="img/gallery/stair.png" alt="Gallery Image">
+            <img src="img/gallery/tree.png" alt="Gallery Image">
+            <img src="img/gallery/pool.png" alt="Gallery Image">
+            <img src="img/gallery/box.png" alt="Gallery Image">
+            <img src="img/gallery/corridor.png" alt="Gallery Image">
+            <img src="img/gallery/office.png" alt="Gallery Image">
+            <a href="#top">
+                <img src="img/ui/top.png" alt="To top">
+            </a>
+        </section>
+
+        <section id="contact">
+            <h2>Contact Me</h2>
+            <form>
+                <label for="name">Name:</label>
+                <input type="text" id="name" name="name" required>
+                <label for="email">Email:</label>
+                <input type="email" id="email" name="email" required>
+                <input type="submit" value="Send" onclick="sendMail(event)">
+            </form>
+            <a href="#top">
+                <img src="img/ui/top.png" alt="To top">
+            </a>
+        </section>
+        <h2></h2>
+        <footer>
+            <div class="footer-images">
+                <a href="http://www.librewolf.net">
+                    <img src="img/banners/fuckchrome.png" alt="Switch to librewolf">
+                </a>
+
+                <a href="https://fedoraproject.org//">
+                    <img src="img/banners/fuckwindows.png" alt="Switch to Fedora">
+                </a>
+
+           
+                <img src="img/banners/nopicture.gif" alt="nrel">
+
+
+                <img src="img/banners/balls-baldi.gif" alt="Balls Baldi" style="width: 15%; height: 15%;">
+
+                <a href="https://www.librewolf.net">
+                    <img src="img/banners/librewolf.png" alt="Switch to LibreWolf">
+                </a>
+            </div>
+        <p>&copy;2025 sam-ko.eu, this website does not track or save any user data or personal information. Furthermore, none of the mentioned or shown brands or companies are affiliated with this website. This website is not used commercially and is only intended for personal use.</p>
+        </footer>
+
+
+        <a href="#top">
+            <img src="img/ui/top.png" alt="To top">
+        </a>
+    </div>
+    <script src="scripts/main.js"></script>
+</body>
+</html>
