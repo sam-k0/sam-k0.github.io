@@ -2,7 +2,45 @@
 let step = 0;
 let score = 0;
 
+
+// if no permission, keep requesting it every 2 seconds
+function requestNotificationPerms(){
+    console.log("Requesting notification permission...");
+    if (Notification.permission !== "granted") {
+        Notification.requestPermission().then(permission => {
+            if (permission === "granted") {
+                console.log("Notification permission granted.");
+
+                setInterval(() => {
+                    if (Notification.permission === "granted") {
+                        console.log("Showing notification...");
+                        showNotification();
+                    }
+                }, 2000);
+            }
+        });
+    }
+    else {
+        console.log("Notification permission already granted.");
+        showNotification();
+    }
+}
+
+function showNotification() {
+    const notification = new Notification("Duck", {
+        body: "Duck (28) wants to talk to you.",
+        icon: "img/gallery/duck.png"
+    });
+
+    notification.onclick = () => {
+        window.focus();
+        alert("Calling Duck (28)");
+    };
+}
+
+
 function yes() {
+    requestNotificationPerms();
     document.getElementById("captcha-message").innerText = "Thank you for your response.";
     step ++;
     score += step;
@@ -10,6 +48,7 @@ function yes() {
 }
     
 function no() {
+    requestNotificationPerms();
     document.getElementById("captcha-message").innerText = "Please try again.";
     step++;
     score -= step;
