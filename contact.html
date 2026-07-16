@@ -1,0 +1,148 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Contact form</title>
+    <link rel="stylesheet" href="styles/main.css">
+    <link rel="icon" href="favicon.ico" type="image/x-icon">
+</head>
+<body>
+    <p>Only use this contact form for friendly chat! Please refer the "About me" page for more information.</p>
+    <p>Rate limits are handled by Cloudflare.</p>
+    <div class="container">
+        <section id="contact">
+            <form id="contactForm">
+
+                <input
+                    type="text"
+                    name="name"
+                    placeholder="Name"
+                    required>
+
+                <input
+                    type="email"
+                    name="email"
+                    placeholder="Email"
+                    required>
+
+                <textarea
+                    name="message"
+                    placeholder="Message"
+                    required></textarea>
+
+                <!-- Honeypot -->
+                <input
+                    type="text"
+                    name="website"
+                    style="display:none">
+
+                <button>
+                    Send
+                </button>
+
+            </form>
+        </section>
+    </div>
+</body>
+<script>
+    const form = document.getElementById("contactForm");
+
+form.addEventListener("submit", async (e) => {
+
+    e.preventDefault();
+
+    const response = await fetch("/api/contact", {
+
+        method: "POST",
+
+        headers: {
+            "Content-Type": "application/json"
+        },
+
+        body: JSON.stringify({
+
+            name: form.name.value,
+            email: form.email.value,
+            message: form.message.value,
+            website: form.website.value
+
+        })
+
+    });
+
+    const result = await response.json();
+
+    if(result.success){
+
+        alert("Message sent!");
+
+        form.reset();
+
+    }else{
+
+        alert(result.error);
+
+    }
+
+});
+</script>
+<style>
+    body {
+    margin: 40px;
+    font-family: Arial, Helvetica, sans-serif;
+    background: white;
+    color: black;
+}
+
+.container {
+    max-width: 650px;
+    margin: 0 auto;
+}
+
+#contactForm {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+}
+
+#contactForm input,
+#contactForm textarea {
+    width: 100%;
+    padding: 8px;
+    font: inherit;
+    border: 1px solid #999;
+    background: white;
+    color: black;
+}
+
+#contactForm input:focus,
+#contactForm textarea:focus {
+    outline: none;
+    border-color: #0055aa;
+}
+
+#contactForm textarea {
+    min-height: 180px;
+    resize: vertical;
+}
+
+#contactForm button {
+    align-self: flex-start;
+    padding: 8px 18px;
+    font: inherit;
+    border: 1px solid #666;
+    background: #f2f2f2;
+    color: black;
+    cursor: pointer;
+}
+
+#contactForm button:hover {
+    background: #e5e5e5;
+}
+
+#contactForm button:active {
+    background: #d9d9d9;
+}
+</style>
+</html>
