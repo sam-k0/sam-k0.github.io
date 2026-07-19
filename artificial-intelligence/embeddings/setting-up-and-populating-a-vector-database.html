@@ -148,7 +148,51 @@ total_inserted <span class="token operator">+=</span> <span class="token builtin
 <span class="token keyword">print</span><span class="token punctuation">(</span><span class="token string-interpolation"><span class="token string">f"Inserted batch into Qdrant. Total: </span><span class="token interpolation"><span class="token punctuation">{</span>total_inserted<span class="token punctuation">}</span></span><span class="token string"> artists\n"</span></span><span class="token punctuation">)</span>
 offset <span class="token operator">+=</span> batch_size
 </code><button class="copy-code-button"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="svg-icon lucide-copy"><rect x="8" y="8" width="14" height="14" rx="2" ry="2"></rect><path d="M4 16c-1.1 0-2-.9-2-2V4c0-1.1.9-2 2-2h10c1.1 0 2 .9 2 2"></path></svg></button></pre></div><div class="el-p"><p dir="auto">Using the qdrant client <code>upsert</code> function, I push a batch of <code>ids, vectors &amp; payloads</code> to the database. These are the same lists from step 2, and yes, they must be the same length.<br>
-Then finally, do some keeping track of offsets for batching and we're done!</p></div><div class="el-p"><p dir="auto">You'll be able to look at your collection through the web dashboard!</p></div><div class="el-p"><p dir="auto">Thanks for reading! Back to the <a data-href="Artificial Intelligence Root" href="artificial-intelligence/artificial-intelligence-root.html" class="internal-link" target="_self" rel="noopener nofollow">Artificial Intelligence Root</a>.</p></div><div class="el-hr"><hr></div><div class="el-p"><p dir="auto">For the sake of context, I put the complete pipeline code below:</p></div><div class="el-pre"><pre class="language-python"><code data-line="0" class="language-python is-loaded"><span class="token keyword">while</span> <span class="token boolean">True</span><span class="token punctuation">:</span>
+Then finally, do some keeping track of offsets for batching and we're done!</p></div><div class="el-p"><p dir="auto">You'll be able to look at your collection through the web dashboard!</p></div><div class="el-p"><p dir="auto">Thanks for reading! Back to the <a data-href="Artificial Intelligence Root" href="artificial-intelligence/artificial-intelligence-root.html" class="internal-link" target="_self" rel="noopener nofollow">Artificial Intelligence Root</a>.</p></div><div class="el-hr"><hr></div><div class="el-p"><p dir="auto">For the sake of context, I put the complete pipeline code below:</p></div><div class="el-pre"><pre class="language-python"><code data-line="0" class="language-python is-loaded"><span class="token keyword">import</span> requests
+<span class="token keyword">from</span> SPARQLWrapper <span class="token keyword">import</span> SPARQLWrapper<span class="token punctuation">,</span> JSON
+<span class="token keyword">from</span> qdrant_client <span class="token keyword">import</span> QdrantClient
+<span class="token keyword">from</span> qdrant_client<span class="token punctuation">.</span>http <span class="token keyword">import</span> models
+<span class="token keyword">import</span> hashlib
+
+OLLAMA_URL <span class="token operator">=</span> <span class="token string">"http://llm-service:11434/api/embeddings"</span>
+PREFIX <span class="token operator">=</span> <span class="token triple-quoted-string string">"""
+PREFIX rdf: &lt;http://www.w3.org/1999/02/22-rdf-syntax-ns#&gt;
+PREFIX rdfs: &lt;http://www.w3.org/2000/01/rdf-schema#&gt;
+PREFIX : &lt;http://h-da.de/fbi/art/&gt;
+PREFIX owl: &lt;http://www.w3.org/2002/07/owl#&gt;
+PREFIX xml: &lt;http://www.w3.org/XML/1998/namespace&gt;
+PREFIX xsd: &lt;http://www.w3.org/2001/XMLSchema#&gt;
+PREFIX wd: &lt;http://www.wikidata.org/entity/&gt;
+BASE &lt;http://h-da.de/fbi/art/&gt;
+"""</span>
+<span class="token keyword">def</span> <span class="token function">get_embedding</span><span class="token punctuation">(</span>text<span class="token punctuation">)</span><span class="token punctuation">:</span>
+	r <span class="token operator">=</span> requests<span class="token punctuation">.</span>post<span class="token punctuation">(</span>
+		OLLAMA_URL<span class="token punctuation">,</span>
+		json<span class="token operator">=</span><span class="token punctuation">{</span><span class="token string">"model"</span><span class="token punctuation">:</span> <span class="token string">"nomic-embed-text"</span><span class="token punctuation">,</span> <span class="token string">"prompt"</span><span class="token punctuation">:</span> text<span class="token punctuation">}</span><span class="token punctuation">,</span>
+		timeout<span class="token operator">=</span><span class="token number">30</span>
+	<span class="token punctuation">)</span>
+	r<span class="token punctuation">.</span>raise_for_status<span class="token punctuation">(</span><span class="token punctuation">)</span>
+	<span class="token keyword">return</span> r<span class="token punctuation">.</span>json<span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">[</span><span class="token string">"embedding"</span><span class="token punctuation">]</span>
+
+  
+
+<span class="token keyword">def</span> <span class="token function">make_id</span><span class="token punctuation">(</span>uri<span class="token punctuation">)</span><span class="token punctuation">:</span>
+	<span class="token keyword">return</span> <span class="token builtin">int</span><span class="token punctuation">(</span>hashlib<span class="token punctuation">.</span>md5<span class="token punctuation">(</span>uri<span class="token punctuation">.</span>encode<span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">.</span>hexdigest<span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">[</span><span class="token punctuation">:</span><span class="token number">8</span><span class="token punctuation">]</span><span class="token punctuation">,</span> <span class="token number">16</span><span class="token punctuation">)</span>
+
+sparql <span class="token operator">=</span> SPARQLWrapper<span class="token punctuation">(</span><span class="token string">"http://fuseki:3030/art-dataset/query"</span><span class="token punctuation">)</span>
+<span class="token comment"># check if the db already exists</span>
+client <span class="token operator">=</span> QdrantClient<span class="token punctuation">(</span>url<span class="token operator">=</span><span class="token string">"http://qdrant:6333"</span><span class="token punctuation">)</span>
+<span class="token keyword">if</span> client<span class="token punctuation">.</span>collection_exists<span class="token punctuation">(</span><span class="token string">"artists"</span><span class="token punctuation">)</span><span class="token punctuation">:</span>
+	<span class="token keyword">print</span><span class="token punctuation">(</span><span class="token string">"Collection 'artists' already exists"</span><span class="token punctuation">)</span>
+	exit<span class="token punctuation">(</span><span class="token number">1</span><span class="token punctuation">)</span>
+	<span class="token comment">#client.delete_collection("artists")</span>
+
+collection_created <span class="token operator">=</span> <span class="token boolean">False</span>
+batch_size <span class="token operator">=</span> <span class="token number">10</span>
+offset <span class="token operator">=</span> <span class="token number">0</span>
+total_inserted <span class="token operator">=</span> <span class="token number">0</span>
+
+<span class="token keyword">while</span> <span class="token boolean">True</span><span class="token punctuation">:</span>
 	<span class="token comment"># step 1</span>
 	sparql<span class="token punctuation">.</span>setQuery<span class="token punctuation">(</span>PREFIX <span class="token operator">+</span> <span class="token string-interpolation"><span class="token string">f"""
 		SELECT ?artist ?label ?desc WHERE {{
